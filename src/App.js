@@ -4,36 +4,14 @@ import { v4 as uuidv4 } from "uuid";
 import FilterItem from "./Components/filter/FilterItem";
 import ContactsList from "./Components/contacts/ContactsItem";
 import { connect } from "react-redux";
+import contactsOperations from "./redux/contacts/contacts-operations";
+import axios from "axios";
+import contactsSelectors from "./redux/contacts/contacts-selectors";
 
 class App extends Component {
-  // state = {
-  //   contacts: [
-  //     { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-  //     { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-  //     { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-  //     { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  //   ],
-  //   filter: "",
-  // };
-
-  // changeFilter = (filter) => {
-  //   this.setState({ filter });
-  // };
-
-  // getVisibleContacts = () => {
-  //   const { contacts, filter } = this.state;
-  //   return contacts.filter((contact) =>
-  //     contact.name.toLowerCase().includes(filter.toLowerCase())
-  //   );
-  // };
-
-  // handleRemove = (contactId) => {
-  //   this.setState((prevState) => {
-  //     return {
-  //       contacts: prevState.contacts.filter(({ id }) => id !== contactId),
-  //     };
-  //   });
-  // };
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
 
   // Отображение имени и телефона, после ввода данных в инпут
   formSubmithandler = (data) => {
@@ -53,35 +31,24 @@ class App extends Component {
   };
 
   render() {
-    // const { contacts, filter } = this.state;
-
     return (
       <div>
-        <PhonebookFormItem
-        // onSubmit={this.formSubmithandler}
-        // contacts={contacts}
-        />
+        <PhonebookFormItem />
         <h2 className="contacts-title">Contacts</h2>
         <FilterItem />
-        <ContactsList
-        // getVisibleContacts={this.getVisibleContacts()}
-        // onRemove={this.handleRemove}
-        />
+        <ContactsList />
+        {this.props.isLoadingContacts && <h1>Загружаем</h1>}
       </div>
     );
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   contacts: state.contacts.items,
-// });
+const mapStateToProps = (state) => ({
+  isLoadingContacts: contactsSelectors.getLoading(state),
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   contactSave: () => null,
-//   contactRemove: () => null,
-//   filterUpdate: () => null,
-// });
+const mapDispatchToProps = (dispatch) => ({
+  fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

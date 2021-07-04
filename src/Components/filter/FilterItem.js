@@ -8,6 +8,7 @@ import {
   contactRemove,
   filterUpdate,
 } from "../../redux/contacts/contacts-actions";
+import contactsSelectors from "../../redux/contacts/contacts-selectors";
 
 function FilterItem({ value, onChangeFilter }) {
   return (
@@ -32,11 +33,14 @@ FilterItem.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  value: state.contacts.filter,
+  value: contactsSelectors.getFilter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeFilter: (evt) => dispatch(filterUpdate(evt.target.value)),
+  onChangeFilter: (evt) => {
+    console.log(evt);
+    dispatch(filterUpdate(evt.target.value));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterItem);

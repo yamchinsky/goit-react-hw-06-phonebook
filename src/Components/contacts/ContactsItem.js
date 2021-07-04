@@ -11,6 +11,7 @@ import {
   contactRemoveError,
   filterUpdate,
 } from "../../redux/contacts/contacts-actions";
+import contactsSelectors from "../../redux/contacts/contacts-selectors";
 
 const ContactsItem = ({ name, number, onClickRemove }) => {
   return (
@@ -25,11 +26,11 @@ const ContactsItem = ({ name, number, onClickRemove }) => {
   );
 };
 
-const ContactsList = ({ getVisibleContacts, onRemove }) => {
+const ContactsList = ({ contacts, onRemove }) => {
   return (
-    getVisibleContacts.length > 0 && (
+    contacts.length > 0 && (
       <ContactsItemStyled>
-        {getVisibleContacts.map(({ id, name, number }) => (
+        {contacts.map(({ id, name, number }) => (
           <ContactsItem
             key={id}
             name={name}
@@ -49,7 +50,7 @@ ContactsItem.propTypes = {
 };
 
 ContactsList.propTypes = {
-  getVisibleContacts: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -59,8 +60,20 @@ ContactsList.propTypes = {
   onRemove: PropTypes.func.isRequired,
 };
 
+// const getVisibleContacts = (contacts, filter) => {
+//   const normalizedFilter = filter.toLowerCase();
+
+//   return contacts.filter((contact) =>
+//     contact.name.toLowerCase().includes(normalizedFilter)
+//   );
+// };
+
+// const mapStateToProps = ({ contacts: { items, filter } }) => ({
+//   contacts: getVisibleContacts(items, filter),
+// });
+
 const mapStateToProps = (state) => ({
-  getVisibleContacts: state.contacts.items,
+  contacts: contactsSelectors.getVisibleContacts(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

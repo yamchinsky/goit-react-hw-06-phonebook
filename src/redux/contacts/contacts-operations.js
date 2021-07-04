@@ -8,19 +8,37 @@ import {
   contactRemoveSuccess,
   contactRemoveError,
   filterUpdate,
+  fetchRequest,
+  fetchSuccess,
+  fetchError,
 } from "../../redux/contacts/contacts-actions";
-axios.defaults.baseURL = "http://localhost:69";
+axios.defaults.baseURL = "http://localhost:4000";
 
-const contactSave = (text) => (dispatch) => {
-  const contact = { text };
+export const fetchContacts = () => async (dispatch) => {
+  dispatch(fetchRequest());
+
+  try {
+    const { data } = await axios.get("/contacts");
+    dispatch(fetchContacts(data));
+  } catch (error) {}
+  // axios
+  //   .get("/contacts")
+  //   .then(({ data }) => dispatch(fetchSuccess(data)))
+  //   .catch((error) => dispatch(fetchError(error)));
+};
+
+export const contactSave = (contact) => (dispatch) => {
   dispatch(contactSaveRequest());
   axios
     .post("./contacts", contact)
-    .then(({ data }) => dispatch(contactSaveSuccess(data)))
+    .then(({ data }) => {
+      console.log(data);
+      dispatch(contactSaveSuccess(data));
+    })
     .catch((error) => dispatch(contactSaveError(error)));
 };
 
-const contactRemove = (contactId) => (dispatch) => {
+export const contactRemove = (contactId) => (dispatch) => {
   dispatch(contactRemoveRequest());
   axios
     .delete(`/contacts/${contactId}`)
@@ -31,4 +49,5 @@ const contactRemove = (contactId) => (dispatch) => {
 export default {
   contactSave,
   contactRemove,
+  fetchContacts,
 };

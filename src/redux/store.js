@@ -12,10 +12,10 @@ import {
   REGISTER,
 } from "redux-persist";
 
-const myMiddleware = (store) => (next) => (action) => {
-  console.log("прослойка", action);
-  next(action);
-};
+// const myMiddleware = (store) => (next) => (action) => {
+//   console.log("прослойка", action);
+//   next(action);
+// };
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -23,7 +23,7 @@ const middleware = [
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
-  myMiddleware,
+  // myMiddleware,
   logger,
 ];
 

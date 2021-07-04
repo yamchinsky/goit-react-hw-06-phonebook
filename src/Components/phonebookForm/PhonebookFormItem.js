@@ -2,15 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { PhonebookItemStyled } from "./PhonebookFormItemStyled";
 import { connect } from "react-redux";
-import {
-  contactSaveRequest,
-  contactSaveSuccess,
-  contactSaveError,
-  contactRemoveRequest,
-  contactRemoveSuccess,
-  contactRemoveError,
-  filterUpdate,
-} from "../../redux/contacts/contacts-actions";
+import { contactSave } from "../../redux/contacts/contacts-operations";
 
 class PhonebookFormItem extends Component {
   state = {
@@ -88,7 +80,7 @@ class PhonebookFormItem extends Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (text) => dispatch(contactSaveSuccess(text)),
+  onSubmit: (contact) => dispatch(contactSave(contact)),
 });
 
 export default connect(null, mapDispatchToProps)(PhonebookFormItem);

@@ -41,7 +41,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build",
-    "api-server": "json-server --port 69 --watch db.json"
+    "api-server": "json-server --port 4000 --watch db.json"
   },
   "eslintConfig": {
     "extends": [
