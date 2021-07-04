@@ -1,13 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  contactSaveRequest,
-  contactSaveSuccess,
-  contactSaveError,
-  contactRemove,
-  filterUpdate,
-} from "../../redux/contacts/contacts-actions";
+import { filterUpdate } from "../../redux/contacts/contacts-actions";
 import contactsSelectors from "../../redux/contacts/contacts-selectors";
 
 function FilterItem({ value, onChangeFilter }) {

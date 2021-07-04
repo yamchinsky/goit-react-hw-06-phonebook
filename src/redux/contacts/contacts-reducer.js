@@ -12,7 +12,7 @@ import {
   fetchSuccess,
   fetchError,
 } from "./contacts-actions";
-import initialState from "./contactsInitialState";
+
 
 const items = createReducer([], {
   [fetchSuccess]: (state, { payload }) => payload,

@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 import { ContactsItemStyled } from "./ContactsItemStyled";
 import { connect } from "react-redux";
 import {
-  contactSaveRequest,
-  contactSaveSuccess,
-  contactSaveError,
-  contactRemoveRequest,
+  
   contactRemoveSuccess,
-  contactRemoveError,
-  filterUpdate,
+  
 } from "../../redux/contacts/contacts-actions";
 import contactsSelectors from "../../redux/contacts/contacts-selectors";
 
